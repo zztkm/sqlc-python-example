@@ -2,7 +2,7 @@
 # versions:
 #   sqlc v1.15.0
 # source: query_sqlite.sql
-from typing import Any, Iterator, Optional
+from typing import Iterator, Optional
 
 import sqlalchemy
 
@@ -48,8 +48,10 @@ class Querier:
     def __init__(self, conn: sqlalchemy.engine.Connection):
         self._conn = conn
 
-    def create_author(self, *, name: Any, bio: Optional[Any]) -> Optional[models.Author]:
-        row = self._conn.execute(sqlalchemy.text(CREATE_AUTHOR), {"p1": name, "p2": bio}).first()
+    def create_author(self, *, name: str, bio: Optional[str]) -> Optional[models.Author]:
+        # row = self._conn.execute(sqlalchemy.text(CREATE_AUTHOR), (name, bio)).first()
+        # 引数を受け付ける場合、 SQLAlchemy 2.0 までは text を使わないようにする
+        row = self._conn.execute(CREATE_AUTHOR, (name, bio)).first()
         if row is None:
             return None
         return models.Author(
@@ -58,11 +60,12 @@ class Querier:
             bio=row[2],
         )
 
-    def delete_author(self, *, id: Any) -> None:
-        self._conn.execute(sqlalchemy.text(DELETE_AUTHOR), {"p1": id})
+    def delete_author(self, *, id: int) -> None:
+        self._conn.execute(sqlalchemy.text(DELETE_AUTHOR), (id,))
 
-    def get_author(self, *, id: Any) -> Optional[models.Author]:
-        row = self._conn.execute(sqlalchemy.text(GET_AUTHOR), {"p1": id}).first()
+    def get_author(self, *, id: int) -> Optional[models.Author]:
+        # row = self._conn.execute(sqlalchemy.text(GET_AUTHOR), (id,)).first()
+        row = self._conn.execute(GET_AUTHOR, (id,)).first()
         if row is None:
             return None
         return models.Author(
@@ -80,5 +83,6 @@ class Querier:
                 bio=row[2],
             )
 
-    def update_author(self, *, name: Any, bio: Optional[Any], id: Any) -> None:
-        self._conn.execute(sqlalchemy.text(UPDATE_AUTHOR), {"p1": name, "p2": bio, "p3": id})
+    def update_author(self, *, name: str, bio: Optional[str], id: int) -> None:
+        # self._conn.execute(sqlalchemy.text(UPDATE_AUTHOR), (name, bio, id))
+        self._conn.execute(UPDATE_AUTHOR, (name, bio, id))
