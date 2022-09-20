@@ -16,8 +16,7 @@ https://docs.sqlc.dev/en/latest/overview/install.html
 # example sqlite
 cd sqlite
 
-# リポジトリに既にファイルがあるので一度 rm
-git rm db
+# コマンドを実行すると db dir が上書きされます
 sqlc generate
 ```
 
