@@ -14,7 +14,9 @@ def main():
         except:
             pass
     
-    queries = Querier(engine.connect())
+    conn = engine.connect()
+    # t = conn.begin()
+    queries = Querier(conn)
 
     # list all authors
     authors = queries.list_authors()
@@ -29,6 +31,9 @@ def main():
     author = queries.get_author(id=created.id)
 
     print(created == author)
+
+    # t.commit()
+    # conn.close()
 
 
 if __name__ == "__main__":
