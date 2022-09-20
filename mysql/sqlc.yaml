@@ -1,0 +1,11 @@
+version: 2
+sql:
+  - engine: "mysql"
+    schema: "schema-mysql.sql"
+    queries: "query-mysql.sql"
+    gen:
+      python:
+        package: "db"
+        out: "db"
+        emit_sync_querier: true
+        # emit_pydantic_models: true

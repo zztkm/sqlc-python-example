@@ -1,0 +1,11 @@
+version: 2
+sql:
+  - engine: "sqlite"
+    schema: "schema_sqlite.sql"
+    queries: "query_sqlite.sql"
+    gen:
+      python:
+        package: "db"
+        out: "db"
+        emit_sync_querier: true
+        emit_pydantic_models: true
