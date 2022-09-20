@@ -13,15 +13,15 @@ MySQL と SQLite の場合、コードは生成されますが型は自分でつ
 https://docs.sqlc.dev/en/latest/overview/install.html
 
 ```shell
-# example postgresql
-cd postgresql
+# example sqlite
+cd sqlite
 
 # リポジトリに既にファイルがあるので一度 rm
 git rm db
 sqlc generate
 ```
 
-`db` ディレクトリにファイルが生成されているのでそれを確認してください。
+root から見て `sqlite/db` ディレクトリにファイルが生成されているのでそれを確認してください。
 
 ## 参考
 
